@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AltQ Settings</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark {
+      background: linear-gradient(135deg, #0a0a0b 0%, #1a1a2e 100%);
+      color: #e4e4e7;
+    }
+    body.light {
+      background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+      color: #1a202c;
+    }
+    header {
+      padding: 24px;
+      border-bottom: 1px solid;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(10px);
+    }
+    body.dark header {
+      border-color: rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+    }
+    body.light header {
+      border-color: rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.6);
+    }
+    h1 { font-size: 20px; font-weight: 600; }
+    .header-right {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .theme-switch {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+    }
+    .theme-switch input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .theme-switch .track {
+      width: 64px;
+      height: 30px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px;
+      position: relative;
+      gap: 2px;
+    }
+    body.light .theme-switch .track {
+      background: rgba(0,0,0,0.05);
+      border-color: rgba(0,0,0,0.15);
+    }
+    .theme-switch .thumb {
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      width: 28px;
+      height: 26px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #10a37f 0%, #0d8a6a 100%);
+      transition: transform 0.25s ease;
+    }
+    .theme-switch input:checked + .track .thumb {
+      transform: translateX(32px);
+    }
+    .tag {
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .content { padding: 24px; max-width: 640px; margin: 0 auto; }
+    .card {
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      border: 1px solid;
+      backdrop-filter: blur(10px);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    body.dark .card {
+      background: rgba(255,255,255,0.03);
+      border-color: rgba(255,255,255,0.06);
+    }
+    body.light .card {
+      background: rgba(255,255,255,0.9);
+      border-color: rgba(0,0,0,0.08);
+    }
+    .card-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+      font-weight: 600;
+      color: #94a3b8;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .stat-box {
+      padding: 12px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid;
+    }
+    body.dark .stat-box {
+      background: rgba(255,255,255,0.03);
+      border-color: rgba(255,255,255,0.07);
+    }
+    body.light .stat-box {
+      background: rgba(0,0,0,0.03);
+      border-color: rgba(0,0,0,0.08);
+    }
+    .stat-value { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+    body.dark .stat-value { color: #10a37f; }
+    body.light .stat-value { color: #059669; }
+    .stat-label { font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; color: #94a3b8; }
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid;
+    }
+    .row:last-child { border-bottom: none; }
+    body.dark .row { border-color: rgba(255,255,255,0.06); }
+    body.light .row { border-color: rgba(0,0,0,0.08); }
+    label { font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; }
+
+
+    select, input {
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 14px;
+      border: 1px solid;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+    body.dark select, body.dark input {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      border-color: rgba(255,255,255,0.15);
+    }
+    body.light select, body.light input {
+      background: #fff;
+      color: #1f2937;
+      border-color: #cbd5e1;
+    }
+
+    /* 1-click segmented buttons (square toggles) */
+    .seg {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .seg-btn {
+      border: 1px solid;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+      line-height: 1;
+      min-height: 34px;
+      background: transparent;
+    }
+    body.dark .seg-btn {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.15);
+      color: #ffffff;
+    }
+    body.light .seg-btn {
+      background: rgba(0,0,0,0.03);
+      border-color: rgba(0,0,0,0.12);
+      color: #1f2937;
+    }
+    .seg-btn:hover {
+      transform: translateY(-1px);
+    }
+    .seg-btn.active {
+      box-shadow: none;
+      transform: none;
+    }
+    body.dark .seg-btn.active {
+      background: rgba(16,163,127,0.22);
+      border-color: rgba(16,163,127,0.70);
+      color: #ffffff;
+    }
+    body.light .seg-btn.active {
+      background: rgba(16,163,127,0.14);
+      border-color: rgba(16,163,127,0.55);
+      color: #065f46;
+    }
+    .seg-btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(16,163,127,0.25);
+    }
+
+    /* Square checkbox (Sound on send) */
+    #soundToggle {
+      width: 18px;
+      height: 18px;
+      padding: 0;
+      border-radius: 4px;
+      border: 1px solid;
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
+      cursor: pointer;
+      position: relative;
+    }
+    body.dark #soundToggle {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.25);
+    }
+    body.light #soundToggle {
+      background: #fff;
+      border-color: #cbd5e1;
+    }
+    #soundToggle:checked {
+      background: linear-gradient(135deg, #10a37f 0%, #0d8a6a 100%);
+      border-color: rgba(16,163,127,0.9);
+    }
+    #soundToggle:checked::after {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 2px;
+      width: 5px;
+      height: 9px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    #soundToggle:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(16,163,127,0.25);
+    }
+
+    /* PRO Activation layout */
+    .license-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .license-row .license-input {
+      flex: 1;
+      margin-top: 0;
+    }
+    .license-row .btn {
+      width: auto;
+      margin-top: 0;
+      padding: 12px 14px;
+      white-space: nowrap;
+    }
+
+    .btn {
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: all 0.2s;
+      color: #fff;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #10a37f 0%, #0d8a6a 100%);
+      box-shadow: 0 6px 18px rgba(16,163,127,0.35);
+    }
+    .btn-secondary {
+      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+      box-shadow: 0 6px 18px rgba(99,102,241,0.35);
+    }
+    .status {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .status.success {
+      background: rgba(34,197,94,0.15);
+      color: #22c55e;
+      border: 1px solid rgba(34,197,94,0.35);
+    }
+    .status.error {
+      background: rgba(239,68,68,0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239,68,68,0.35);
+    }
+    .limit-warning {
+      display: none;
+      border-radius: 10px;
+      padding: 12px;
+      background: rgba(251,191,36,0.15);
+      border: 1px solid rgba(251,191,36,0.35);
+      color: #f59e0b;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .kbd {
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid;
+      font-family: monospace;
+    }
+    body.dark .kbd {
+      border-color: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.06);
+    }
+    body.light .kbd {
+      border-color: rgba(0,0,0,0.15);
+      background: rgba(0,0,0,0.04);
+    }
+    .hint {
+      font-size: 12px;
+      line-height: 1.6;
+      color: #94a3b8;
+    }
+
+    .ai-instructions {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      line-height: 1.45;
+      resize: vertical;
+      min-height: 140px;
+    }
+    body.dark .ai-instructions {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.9);
+    }
+    body.light .ai-instructions {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: #0f172a;
+    }
+
+    .version {
+      text-align: center;
+      font-size: 12px;
+      opacity: 0.5;
+      padding: 20px 0 10px;
+    }
+  </style>
+</head>
+<body class="dark">
+  <header>
+    <h1>AltQ</h1>
+    <div class="header-right">
+      <label class="theme-switch">
+        <input type="checkbox" id="themeToggle" aria-label="Toggle theme">
+        <span class="track">
+          <span class="thumb"></span>
+          <span class="icon moon">🌙</span>
+          <span class="icon sun">☀️</span>
+        </span>
+      </label>
+      <span class="tag" id="proTag">FREE</span>
+    </div>
+  </header>
+  <div class="content">
+    <div class="card" id="usageCard">
+      <div class="card-title">Usage Stats</div>
+      <div id="limitWarning" class="limit-warning">Daily limit reached! Upgrade to PRO for unlimited access.</div>
+      <div class="stats">
+        <div class="stat-box">
+          <div class="stat-value" id="dailyLeft">0s</div>
+          <div class="stat-label">Time Saved Today</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="bonusLeft">0s</div>
+          <div class="stat-label">Total Time Saved</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="todayUsed">0</div>
+          <div class="stat-label">Today Used</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="totalUsed">0</div>
+          <div class="stat-label">Total Used</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">PRO Activation</div>
+      <div class="license-row">
+        <input type="text" id="licenseInput" class="license-input license-input" placeholder="Enter license key" />
+        <button class="btn btn-primary" id="verifyBtn" type="button">Activate</button>
+      </div>
+      <button class="btn btn-secondary" id="buyBtn" type="button">Buy PRO</button>
+      <div class="status" id="statusBox"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Tab Settings</div>
+
+      <div class="row">
+        <label>
+          Open AI tab:
+        </label>
+        <div class="seg" role="group" aria-label="Open AI tab position">
+          <button type="button" class="seg-btn" data-setting="tabPosition" data-value="next">Next</button>
+          <button type="button" class="seg-btn" data-setting="tabPosition" data-value="start">Beginning</button>
+          <button type="button" class="seg-btn" data-setting="tabPosition" data-value="end">End</button>
+        </div>
+      </div>
+      <p class="hint">Controls where the AI tab opens: next to the current tab, after pinned tabs, or at the end.</p>
+
+      <div class="row">
+        <label>
+          Chat Start Mode:
+        </label>
+        <div class="seg" role="group" aria-label="Chat start mode">
+          <button type="button" class="seg-btn" data-setting="chatMode" data-value="new">New</button>
+          <button type="button" class="seg-btn" data-setting="chatMode" data-value="reuse">Reuse tab</button>
+        </div>
+      </div>
+      <p class="hint">New always opens a fresh AI tab. Reuse sends to the last tab you used for that AI service.</p>
+
+      <div class="row">
+        <label>
+          Insert Mode:
+        </label>
+        <div class="seg" role="group" aria-label="Insert mode">
+          <button type="button" class="seg-btn" data-setting="insertMode" data-value="replace">Replace</button>
+          <button type="button" class="seg-btn" data-setting="insertMode" data-value="append">Append</button>
+        </div>
+      </div>
+      <p class="hint">Replace overwrites the AI input. Append adds your new text after what is already typed.</p>
+
+      <div class="row">
+        <label>
+          Focus Mode:
+        </label>
+        <div class="seg" role="group" aria-label="Focus mode">
+          <button type="button" class="seg-btn" data-setting="focusMode" data-value="focus">Focus AI</button>
+          <button type="button" class="seg-btn" data-setting="focusMode" data-value="stay">Stay</button>
+        </div>
+      </div>
+      <p class="hint">Focus switches you to the AI tab. Stay keeps you on the current page while sending in the background.</p>
+
+      <div class="row">
+        <label for="soundToggle">
+          Sound on send:
+        </label>
+        <input type="checkbox" id="soundToggle" />
+      </div>
+      <p class="hint">Plays a short beep on send (useful if Focus Mode is set to Stay).</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Hotkeys</div>
+      <div class="row">
+        <label>Quick send</label>
+        <span class="kbd">Windows: Alt + Q | Mac: Option + Q</span>
+      </div>
+      <div class="row">
+        <label>Return to source</label>
+        <span class="kbd">Windows: Alt + W | Mac: Option + W</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Quick Instructions</div>
+      <p class="hint">1) Select text on any page.</p>
+      <p class="hint">2) Click an AI icon OR press <span class="kbd">Windows: Alt + Q | Mac: Option + Q</span>.</p>
+      <p class="hint">3) To reuse a template: click a prompt on the right to pin it, then <span class="kbd">Alt + Q</span> will use it.</p>
+      <p class="hint">4) Press <span class="kbd">Windows: Alt + W | Mac: Option + W</span> to return to the source tab.</p>
+      <p class="hint">Tip: After changing Tab Settings you don’t need to refresh the page — just reselect text if the popup is hidden.</p>
+    </div>
+
+  </div>
+  <div class="version">AltQ v7.2.6</div>
+  <script src="options.js" defer></script>
+</body>
+</html>

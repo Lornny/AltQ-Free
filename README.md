@@ -217,5 +217,3 @@ If you work with AI daily, AltQ becomes invisible — which is exactly the point
 
 Link on pro version
 https://payhip.com/b/7Co9W
-
-https://payhip.com/b/7Co9W

@@ -1,4 +1,5 @@
 🚀 Send any text to AI in one keystroke — with built-in reasoning
+https://youtu.be/FPelOhhJZ3c
 
 AltQ removes the slowest part of working with AI: writing prompts, fixing context, and retrying.
 

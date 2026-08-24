@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AltQ — Privacy Policy</title>
+<style>
+  :root{
+    --bg:#0b0b0d; --card:#151517; --text:#e5e7eb; --muted:#94a3b8; --accent:#10a37f; --border:#26262a;
+  }
+  @media (prefers-color-scheme: light){
+    :root{ --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#475569; --accent:#0d8a6a; --border:#e2e8f0; }
+  }
+  html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  .wrap{max-width:760px;margin:0 auto;padding:56px 24px 100px;}
+  h1{font-size:28px;margin:0 0 4px;}
+  .updated{color:var(--muted);font-size:13px;margin-bottom:32px;}
+  .summary{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:32px;font-size:15px;line-height:1.7;}
+  h2{font-size:18px;margin:36px 0 10px;}
+  h3{font-size:15px;margin:20px 0 6px;color:var(--text);}
+  p,li{font-size:14.5px;line-height:1.75;color:var(--text);}
+  ul{padding-left:20px;}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px;}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+  th{color:var(--muted);font-weight:600;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  code{background:var(--card);border:1px solid var(--border);border-radius:5px;padding:1px 6px;font-size:13px;}
+  .footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:13px;}
+  strong{color:var(--text);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Privacy Policy — AltQ</h1>
+  <div class="updated">Last updated: August 24, 2026</div>
+
+  <div class="summary">
+    <strong>AltQ has no backend server.</strong> It never collects, transmits, or sells your data. Everything the extension does happens locally, inside your own browser. This policy applies to both <strong>AltQ (Free)</strong> and <strong>AltQ PRO</strong>.
+  </div>
+
+  <h2>What AltQ does with your data</h2>
+
+  <h3>Selected text</h3>
+  <p>When you select text on a page and use AltQ (via the popup, Alt+Q, or right-click "Send to AI"), that text is inserted directly into the input field of the AI website you chose (e.g. ChatGPT, Claude, Perplexity) — the same as if you had typed or pasted it yourself. This text is <strong>never sent to AltQ or to any server we operate.</strong> It goes only to the third-party AI website you selected, subject to that website's own privacy policy and terms.</p>
+
+  <h3>Locally stored data</h3>
+  <p>AltQ uses your browser's built-in local storage (<code>chrome.storage.local</code>) to save your preferences and content on your own device, including:</p>
+  <ul>
+    <li>Your settings (theme, hotkeys, popup mode, sound on/off, etc.)</li>
+    <li>Usage statistics (counts and time-saved estimates) — numbers only, never the content of what you sent</li>
+    <li>Your custom prompts (PRO), if you create any</li>
+  </ul>
+  <p>None of this data is transmitted anywhere. It stays on your device and is removed if you uninstall the extension.</p>
+
+  <h3>Local file sync (PRO only)</h3>
+  <p>AltQ PRO can optionally sync your custom prompts to a folder on your computer using the browser's File System Access API, so you can edit them as plain <code>.txt</code> files. This is entirely local — files are read from and written to your own disk, never uploaded anywhere. This feature is off unless you explicitly connect a folder.</p>
+
+  <h3>Purchases</h3>
+  <p>If you choose to buy AltQ PRO or support the developer via Ko-fi, you leave the extension and are taken to a third-party payment page (Payhip / Ko-fi). We do not receive, process, or store your payment information — that is handled entirely by those third parties under their own privacy policies:</p>
+  <ul>
+    <li><a href="https://payhip.com/privacy" target="_blank" rel="noopener">Payhip Privacy Policy</a></li>
+    <li><a href="https://ko-fi.com/privacy" target="_blank" rel="noopener">Ko-fi Privacy Policy</a></li>
+  </ul>
+
+  <h2>Permissions we request, and why</h2>
+  <table>
+    <tr><th>Permission</th><th>Why it's needed</th></tr>
+    <tr><td><code>storage</code> / <code>unlimitedStorage</code></td><td>Save your settings and custom prompts locally on your device</td></tr>
+    <tr><td><code>tabs</code></td><td>Open/find the right AI tab when you send text, and return you to your source tab</td></tr>
+    <tr><td><code>contextMenus</code></td><td>Show the "Send to AI" option when you right-click selected text</td></tr>
+    <tr><td><code>alarms</code> (PRO only)</td><td>Periodically check for changes to synced prompt files on disk</td></tr>
+    <tr><td>Host access (all sites)</td><td>AltQ needs to detect text selection on any page you choose to use it on, and to insert text into the AI site you pick. Without this, the core feature would not work.</td></tr>
+  </table>
+
+  <h2>Data we do NOT collect</h2>
+  <ul>
+    <li>No analytics, telemetry, or crash reports</li>
+    <li>No cookies or tracking pixels</li>
+    <li>We do not know who you are, what pages you visit, or what text you send</li>
+    <li>We do not sell or share data with advertisers or any other third party — because we do not collect any data to begin with</li>
+  </ul>
+
+  <h2>Children's privacy</h2>
+  <p>AltQ is not directed at children and does not knowingly collect any data from anyone, regardless of age.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If AltQ's data handling ever changes (for example, if a future version adds an optional cloud sync feature), this policy will be updated first, and the change will be clearly disclosed in the extension's release notes before it takes effect.</p>
+
+  <h2>Contact / Support</h2>
+  <p>This project is open on GitHub. Questions about this policy, your data, or bug reports and feature requests go through GitHub Issues:</p>
+  <p><strong><a href="#" id="repo-link">github.com/your-username/altq/issues — replace with your actual repo URL</a></strong></p>
+
+  <div class="footer">This document covers both the AltQ (Free) and AltQ PRO extensions distributed by the same developer.</div>
+</div>
+</body>
+</html>

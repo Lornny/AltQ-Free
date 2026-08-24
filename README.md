@@ -1,6 +1,11 @@
 🚀 Send any text to AI in one keystroke — with built-in reasoning
 Youtube Gide https://youtu.be/FPelOhhJZ3c
 
+- 🔗 [Privacy Policy](https://github.com/Lornny/task-and-rest/blob/main/privacy.html)
+- 🔗 [Support](https://github.com/Lornny/task-and-rest/issues)
+
+These pages are served via GitHub Pages and linked from the extension's Chrome Web Store listing.
+
 AltQ removes the slowest part of working with AI: writing prompts, fixing context, and retrying.
 
 Highlight any text on any website and press:
